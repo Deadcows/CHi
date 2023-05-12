@@ -1,0 +1,67 @@
+Welcome to CHi!
+Conditional Hierarchy Styling Manager v1.0
+
+To get some help or request feature mail me to:
+	support@deadcow.ru
+
+
+*To create and edit static rules go to "Window/CHi Manager"
+*Tap "Tag, Layer, Visible, Hidden" buttons to add new rules.
+*Drag&Drop icons, assign Background, Foreground, Icon Tint colors.
+
+*To create conditional rules
+1) Implement ICHi interface with your MonoBehaviour:
+
+	public class MyBehaviourScript : MonoBehaviour, ICHi {
+		//
+		// Your code
+		//
+		
+		public CHiCondition CHiThis()
+		{
+			return new CHiCondition()
+				.Add(*condition*, *style*)
+				.Add(*anotherCondition*, *anotherStyle*);
+		}
+	}
+
+You may add as many conditions as you want.	
+
+2) Put some lambda condition instead of *condition*, like
+
+	() => Text.length < 10
+	
+or
+
+	() => Health >= 50
+	
+or even 
+
+	() => true
+	
+Any boolean condition.
+If condition is true style will be applied.
+
+3) Put new condition style instead of *style*
+
+	new CHiStyle()
+	
+CHiStyle have following static methods:
+
+	CHiStyle WithIcon(Sprite sprite) // To add sprite with default tint
+	CHiStyle WithColoredIcon(Sprite sprite, Color color) // To add sprite with custom tint
+	CHiStyle WithForeground(Color color) // To set text color
+	CHiStyle WithBackground(Color color) // To set background color
+	
+So to create style you may do something like this:
+
+	new CHiStyle()
+		.WithColoredIcon(alertSprite, Color.red);
+	
+or
+	
+	new CHiStyle()
+		.WithIcon(dialogSprite)
+		.WithBackground(Color.black)
+		.WithForeground(Color.white);
+	
